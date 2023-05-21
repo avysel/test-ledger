@@ -1,40 +1,51 @@
 
-import Tezos from "@ledgerhq/hw-app-tezos"
+import AppTezos from "@ledgerhq/hw-app-tezos"
 import TransportWebUSB from "@ledgerhq/hw-transport-webusb";
 import { useEffect, useState } from 'react';
 
 function ConnectButton() {
 
-    const disclaimer = "<h1>Connect your Ledger and open the Tezos app. Click anywhere to start...</h1>";
-
-    const [tezApp, setTezApp] = useState<Tezos | undefined>();
-
-    const initScreen = async () => {
-        const tezosAddress = await tezApp.getAddress(
-            "44'/0'/0'/0/0",
-            { verify: false,}
-          );
-
-          console.log(tezosAddress);
-    }
+    const [tezApp, setTezApp] = useState<AppTezos | undefined>();
 
     useEffect(() => {
 
-        const initTezApp = async () => {
-            const transport = await TransportWebUSB.create();
-            setTezApp(new Tezos(transport));
-        }
-    
-        initTezApp().then( () => initScreen());
-
     }, [])
+
+    const connectLedger = () => {
+        console.log(`Connect with ${tezApp}`)
+        const initTezApp = async () => {
+            try {
+                if(!tezApp) {
+                    const transport: any = await TransportWebUSB.create();
+                    console.log(transport);
+                    const app = new AppTezos(transport);
+                    console.log(app);
+                    setTezApp(app);
+                    console.log(await app.getVersion());
+                    const tezosAddress = await app.getAddress(
+                        "44'/1729'/1'/0",
+                        { verify: false }
+                    );
+            
+                    console.log(tezosAddress);
+                }
+                else {
+                    console.log("Already connected");
+                }
+            }
+            catch(error) {
+                console.error(error);
+            }
+        }
+
+        initTezApp();
+    }
 
     return (
         <>
-        {disclaimer}
-        <button className="button">Connect Ledger</button>
+            <button className="button" onClick={connectLedger}>Connect Ledger</button>
         </>
-        
+
     );
 }
 
