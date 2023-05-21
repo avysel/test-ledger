@@ -12,21 +12,23 @@ function Wallet() {
         <div>
             <UserContext.Provider value={{ userData, setUserData }}>
                 <div className="card">
+                    <div className="card-content">
 
-                    {
-                        userData &&
-                        <div>
-                            <UserInfo />
-                            <DisconnectButton/>
-                        </div>
-                    }
+                        {
+                            userData &&
+                            <div>
+                                <UserInfo />
+                                <DisconnectButton />
+                            </div>
+                        }
 
-                    {
-                        !userData &&
-                        <div>
-                            <ConnectButton/>
-                        </div>
-                    }
+                        {
+                            !userData &&
+                            <div>
+                                <ConnectButton />
+                            </div>
+                        }
+                    </div>
                 </div>
             </UserContext.Provider>
         </div>
