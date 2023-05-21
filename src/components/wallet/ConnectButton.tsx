@@ -1,4 +1,3 @@
-
 import { useContext, useEffect, useState } from 'react';
 import { DerivationType, HDPathTemplate, LedgerSigner } from '@taquito/ledger-signer';
 import { TezosToolkit } from "@taquito/taquito";
@@ -9,7 +8,7 @@ import { UserData } from '../../types';
 
 function ConnectButton() {
 
-    const {setUserData} = useContext(UserContext);
+    const { setUserData } = useContext(UserContext);
     const Tezos: TezosToolkit = useContext(TezosContext);
     const [message, setMessage] = useState<string>(undefined);
     const [errorMessage, setErrorMessage] = useState<string>(undefined);
@@ -23,11 +22,14 @@ function ConnectButton() {
         setErrorMessage(undefined);
 
         const initTezApp = async () => {
-            try {
-                const transport = await TransportWebHID.create();
-                console.log(transport);
 
-                setMessage("Pleace accept request on your Ledger ...")
+            let transport;
+
+            try {
+                console.log("Create a new transport");
+                transport = await TransportWebHID.create();
+
+                setMessage("Please accept request on your Ledger ...")
                 const ledgerSigner = new LedgerSigner(
                     transport,
                     HDPathTemplate(0), // path optional (equivalent to "44'/1729'/1'/0'")
@@ -46,11 +48,9 @@ function ConnectButton() {
                     transport: transport
                 };
                 setUserData(newUserData);
-
-                console.log(publicKeyHash);
-
             }
             catch (error: any) {
+                transport.close();
                 console.log(error.message);
                 console.error(error);
                 setMessage(undefined);
