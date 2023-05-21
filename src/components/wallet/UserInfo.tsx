@@ -8,19 +8,21 @@ function UserInfo() {
 
     return (
 
-        <div className="card">
-            <header className="card-header">
-                <p className="card-header-title">
-                    User info
-                </p>
+        <div className="user-info-card">
+            <p className="card-header-title">
+                User info
+            </p>
 
-            </header>
-            <div className="card-content">
+            {
+                userData &&
                 <div className="user-data">
-                    <p>Address: lkjlkjkljkjkjkl</p> 
-                    <p>Balance: 12</p> 
-                    {userData}
+                    <p>Address: {userData.address}</p>
+                    <p>Balance: {userData.balance}</p>
                 </div>
+            }
+
+            <div className="card-content">
+
             </div>
         </div>
     )

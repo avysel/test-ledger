@@ -11,12 +11,23 @@ function Wallet() {
 
     return (
         <>
+            <div className="card">
 
-            <UserInfo />
+                {
+                    userData &&
+                    <p>
+                        <UserInfo />
+                        <DisconnectButton />
+                    </p>
+                }
 
-            <ConnectButton />
-
-            <DisconnectButton />
+                {
+                    !userData &&
+                    <p>
+                        <ConnectButton/>
+                    </p>
+                }
+            </div>
         </>
     );
 }
