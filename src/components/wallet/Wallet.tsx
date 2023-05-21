@@ -9,26 +9,28 @@ function Wallet() {
 
     let userData: UserData | undefined = useContext(UserContext);
 
+    
+
     return (
-        <>
+        <div>
             <div className="card">
 
                 {
                     userData &&
-                    <p>
+                    <div>
                         <UserInfo />
                         <DisconnectButton />
-                    </p>
+                    </div>
                 }
 
                 {
                     !userData &&
-                    <p>
+                    <div>
                         <ConnectButton/>
-                    </p>
+                    </div>
                 }
             </div>
-        </>
+        </div>
     );
 }
 
