@@ -17,7 +17,7 @@ function UserInfo() {
                 userData &&
                 <div className="user-data">
                     <p>Address: {userData.address}</p>
-                    <p>Balance: {userData.balance}</p>
+                    <p>Balance: {userData.balance / 1000000} ꜩ</p>
                 </div>
             }
 
