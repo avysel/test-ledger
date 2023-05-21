@@ -4,7 +4,7 @@ import { UserData } from "../../types";
 
 function UserInfo() {
 
-    let userData: UserData | undefined = useContext(UserContext);
+    const {userData} = useContext(UserContext);
 
     return (
 

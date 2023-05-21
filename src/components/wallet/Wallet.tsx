@@ -1,35 +1,35 @@
-import { useContext } from "react";
-import { UserContext } from "../../lib/UserContext";
+import { useContext, useEffect } from "react";
 import { UserData } from "../../types";
 import UserInfo from "./UserInfo";
 import DisconnectButton from "./DisconnectButton";
 import ConnectButton from "./ConnectButton";
+import { UserContext } from "../../lib/UserContext";
 
 function Wallet() {
 
-    let userData: UserData | undefined = useContext(UserContext);
-
-    
+    const { userData, setUserData } = useContext(UserContext);
 
     return (
         <div>
-            <div className="card">
+            <UserContext.Provider value={{ userData, setUserData }}>
+                <div className="card">
 
-                {
-                    userData &&
-                    <div>
-                        <UserInfo />
-                        <DisconnectButton />
-                    </div>
-                }
+                    {
+                        userData &&
+                        <div>
+                            <UserInfo />
+                            <DisconnectButton />
+                        </div>
+                    }
 
-                {
-                    !userData &&
-                    <div>
-                        <ConnectButton/>
-                    </div>
-                }
-            </div>
+                    {
+                        !userData &&
+                        <div>
+                            <ConnectButton />
+                        </div>
+                    }
+                </div>
+            </UserContext.Provider>
         </div>
     );
 }

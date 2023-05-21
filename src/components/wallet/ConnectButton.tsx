@@ -4,13 +4,13 @@ import { DerivationType, HDPathTemplate, LedgerSigner } from '@taquito/ledger-si
 import { TezosToolkit } from "@taquito/taquito";
 import TransportWebHID from "@ledgerhq/hw-transport-webhid";
 import { UserContext } from "../../lib/UserContext";
-import { UserData } from '../../types';
 import { TezosContext } from '../../lib/TezosContext';
+import { UserData } from '../../types';
 
 function ConnectButton() {
 
-    let userData: UserData | undefined = useContext(UserContext);
-    let Tezos: TezosToolkit = useContext(TezosContext);
+    const {userData, setUserData} = useContext(UserContext);
+    const Tezos: TezosToolkit = useContext(TezosContext);
     const [message, setMessage] = useState<string>(undefined);
     const [errorMessage, setErrorMessage] = useState<string>(undefined);
 
@@ -30,8 +30,8 @@ function ConnectButton() {
 
                 setMessage("Pleace accept request on your Ledger ...")
                 const ledgerSigner = new LedgerSigner(
-                    transport, //required
-                    HDPathTemplate(1), // path optional (equivalent to "44'/1729'/1'/0'")
+                    transport,
+                    HDPathTemplate(0), // path optional (equivalent to "44'/1729'/1'/0'")
                     true, // prompt optional
                     DerivationType.ED25519 // derivationType optional
                 );
@@ -41,10 +41,11 @@ function ConnectButton() {
                 //const publicKey = await Tezos.signer.publicKey();
                 const publicKeyHash = await Tezos.signer.publicKeyHash();
                 setMessage(undefined);
-                userData = {
+                let newUserData: UserData = {
                     address: publicKeyHash,
                     balance: (await Tezos.tz.getBalance(publicKeyHash)).toNumber()
                 };
+                setUserData(newUserData);
 
                 console.log(publicKeyHash);
 
