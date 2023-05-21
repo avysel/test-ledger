@@ -1,7 +1,21 @@
+import { useContext } from "react";
+import { UserContext } from "../../lib/UserContext";
+import { TezosToolkit } from "@taquito/taquito";
+import { TezosContext } from "../../lib/TezosContext";
 
-function DisconnectButton() {
+function DisconnectButton(transport: any) {
+
+    const {userData, setUserData} = useContext(UserContext);
+    const Tezos: TezosToolkit = useContext(TezosContext);
+
+    const disconnectLedger = () => {
+        userData.transport.close();
+        setUserData(undefined);
+        Tezos.setSignerProvider(undefined);
+    }
+
     return (
-        <button className="button">Disconnect Ledger</button>
+        <button className="button" onClick={disconnectLedger}>Disconnect Ledger</button>
     );
 }
 

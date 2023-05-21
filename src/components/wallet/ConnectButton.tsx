@@ -9,7 +9,7 @@ import { UserData } from '../../types';
 
 function ConnectButton() {
 
-    const {userData, setUserData} = useContext(UserContext);
+    const {setUserData} = useContext(UserContext);
     const Tezos: TezosToolkit = useContext(TezosContext);
     const [message, setMessage] = useState<string>(undefined);
     const [errorMessage, setErrorMessage] = useState<string>(undefined);
@@ -24,7 +24,6 @@ function ConnectButton() {
 
         const initTezApp = async () => {
             try {
-
                 const transport = await TransportWebHID.create();
                 console.log(transport);
 
@@ -43,7 +42,8 @@ function ConnectButton() {
                 setMessage(undefined);
                 let newUserData: UserData = {
                     address: publicKeyHash,
-                    balance: (await Tezos.tz.getBalance(publicKeyHash)).toNumber()
+                    balance: (await Tezos.tz.getBalance(publicKeyHash)).toNumber(),
+                    transport: transport
                 };
                 setUserData(newUserData);
 

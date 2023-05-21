@@ -1,5 +1,4 @@
-import { useContext, useEffect } from "react";
-import { UserData } from "../../types";
+import { useContext } from "react";
 import UserInfo from "./UserInfo";
 import DisconnectButton from "./DisconnectButton";
 import ConnectButton from "./ConnectButton";
@@ -18,14 +17,14 @@ function Wallet() {
                         userData &&
                         <div>
                             <UserInfo />
-                            <DisconnectButton />
+                            <DisconnectButton/>
                         </div>
                     }
 
                     {
                         !userData &&
                         <div>
-                            <ConnectButton />
+                            <ConnectButton/>
                         </div>
                     }
                 </div>
