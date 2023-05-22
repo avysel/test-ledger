@@ -27,7 +27,14 @@ function ConnectButton() {
 
             try {
                 console.log("Create a new transport");
-                transport = await TransportWebHID.create();
+                try {
+                    transport = await TransportWebHID.create();
+                }
+                catch(error: any) {
+                    console.log(error);
+                    setErrorMessage(error.message);
+                    return;
+                }
 
                 setMessage("Please accept request on your Ledger ...")
                 const ledgerSigner = new LedgerSigner(
@@ -37,6 +44,7 @@ function ConnectButton() {
                     DerivationType.ED25519 // derivationType optional
                 );
 
+                console.log("Set transport as signer")
                 Tezos.setProvider({ signer: ledgerSigner });
 
                 //const publicKey = await Tezos.signer.publicKey();

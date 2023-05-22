@@ -8,8 +8,11 @@ function Transaction() {
     const { userData } = useContext(UserContext);
     const Tezos: TezosToolkit = useContext(TezosContext);
     const [message, setMessage] = useState<string>(undefined);
+    const [errorMessage, setErrorMessage] = useState<string>(undefined);
 
     const send = () => {
+        setMessage(undefined);
+        setErrorMessage(undefined);
         const amount = 1;
         const address = userData.address;
 
@@ -23,8 +26,8 @@ function Transaction() {
                 setMessage(`Waiting for ${op.opHash} to be confirmed...`);
                 return op.confirmation(1).then(() => op.opHash);
             })
-            .then((hash) => { console.log(`Operation injected: https://ghost.tzstats.com/${hash}`); setMessage(`Operation injected: https://ghost.tzstats.com/${hash}`) })
-            .catch((error) => console.log(`Error: ${error} ${JSON.stringify(error, null, 2)}`));
+            .then((hash) => { console.log(`hash: ${hash}`); setMessage(`Operation injected: https://ghost.tzstats.com/${hash}`) })
+            .catch((error) => { setErrorMessage(`${error.message}`); console.log(error) });
     }
 
     return (
@@ -41,6 +44,17 @@ function Transaction() {
                             <article className="message is-info">
                                 <div className="message-body">
                                     {message}
+                                </div>
+                            </article>
+                        </div>
+                    }
+
+                    {
+                        errorMessage &&
+                        <div>
+                            <article className="message is-danger">
+                                <div className="message-body">
+                                    {errorMessage}
                                 </div>
                             </article>
                         </div>

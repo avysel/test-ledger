@@ -5,11 +5,12 @@ import { UserData } from './types';
 import { TezosContext } from './lib/TezosContext';
 import { UserContext } from './lib/UserContext';
 import Transaction from './components/content/Transaction';
+import config from './config.json';
 
 
 function App() {
 
-  const [Tezos] = useState<TezosToolkit>(new TezosToolkit('https://ghostnet.tezos.marigold.dev/'));
+  const [Tezos] = useState<TezosToolkit>(new TezosToolkit(config.rpcUrl));
   const [userData, setUserData] = useState<UserData | undefined>(undefined);
 
   return (
