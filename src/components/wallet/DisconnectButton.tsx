@@ -3,7 +3,7 @@ import { UserContext } from "../../lib/UserContext";
 import { TezosToolkit } from "@taquito/taquito";
 import { TezosContext } from "../../lib/TezosContext";
 
-function DisconnectButton(transport: any) {
+function DisconnectButton() {
 
     const {userData, setUserData} = useContext(UserContext);
     const Tezos: TezosToolkit = useContext(TezosContext);
