@@ -10,6 +10,8 @@ Example of how to connect Ledger wallet to a Tezos app.
 - Disable Ledger connection for non-compatible browser
 - Send a self-transaction of 1 tez using connected account
 
+Try it: https://tezos-ledger-connect.netlify.app/
+
 ## Technical stack
 
 Made with:
