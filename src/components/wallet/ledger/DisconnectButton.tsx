@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { UserContext } from "../../lib/UserContext";
+import { UserContext } from "../../../lib/UserContext";
 import { TezosToolkit } from "@taquito/taquito";
-import { TezosContext } from "../../lib/TezosContext";
+import { TezosContext } from "../../../lib/TezosContext";
 
 function DisconnectButton() {
 

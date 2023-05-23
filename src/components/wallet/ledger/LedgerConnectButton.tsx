@@ -2,9 +2,9 @@ import { useContext, useEffect, useState } from 'react';
 import { DerivationType, HDPathTemplate, LedgerSigner } from '@taquito/ledger-signer';
 import { TezosToolkit } from "@taquito/taquito";
 import TransportWebHID from "@ledgerhq/hw-transport-webhid";
-import { UserContext } from "../../lib/UserContext";
-import { TezosContext } from '../../lib/TezosContext';
-import { UserData } from '../../types';
+import { UserContext } from "../../../lib/UserContext";
+import { TezosContext } from '../../../lib/TezosContext';
+import { UserData } from '../../../types';
 
 function ConnectButton() {
 
@@ -12,6 +12,10 @@ function ConnectButton() {
     const Tezos: TezosToolkit = useContext(TezosContext);
     const [message, setMessage] = useState<string>(undefined);
     const [errorMessage, setErrorMessage] = useState<string>(undefined);
+
+    let mobileNavigatorObject: any = window.navigator;
+    const ledgerAvailable: boolean = mobileNavigatorObject.hid;
+    console.log(mobileNavigatorObject);
 
     useEffect(() => {
 
@@ -30,7 +34,7 @@ function ConnectButton() {
                 try {
                     transport = await TransportWebHID.create();
                 }
-                catch(error: any) {
+                catch (error: any) {
                     console.log(error);
                     setErrorMessage(error.message);
                     return;
@@ -71,11 +75,22 @@ function ConnectButton() {
 
     return (
         <div>
-            <div>Please connect your Ledger and open Tezos application.</div>
-            <div>
-                <button className="button" onClick={connectLedger}>Connect Ledger</button>
+            <div className="block">
+                Please connect your Ledger and open Tezos application.
             </div>
-            <br />
+            <div className="block">
+                <button className="button" onClick={connectLedger} disabled={!ledgerAvailable}>Connect with Ledger</button>
+            </div>
+            <div  className="block">
+            {
+                !mobileNavigatorObject.hid &&
+                <span className="message is-danger">
+                    <div className="message-body">
+                        Available only on Chrome, Edge and Opera.
+                    </div>
+                </span>
+            }
+
             {
                 message &&
                 <div>
@@ -97,9 +112,8 @@ function ConnectButton() {
                     </article>
                 </div>
             }
-
+            </div>
         </div>
-
     );
 }
 

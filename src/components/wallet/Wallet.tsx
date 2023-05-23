@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import UserInfo from "./UserInfo";
-import DisconnectButton from "./DisconnectButton";
-import ConnectButton from "./ConnectButton";
+import DisconnectButton from "./ledger/DisconnectButton";
+import ConnectButton from "./ledger/LedgerConnectButton";
 import { UserContext } from "../../lib/UserContext";
 
 function Wallet() {
