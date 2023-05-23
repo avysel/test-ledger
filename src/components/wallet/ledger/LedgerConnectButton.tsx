@@ -9,7 +9,7 @@ import { UserData } from '../../../types';
 function LedgerConnectButton() {
 
     const { setUserData } = useContext(UserContext);
-    const Tezos: TezosToolkit = useContext(TezosContext);
+    const { Tezos }: {Tezos: TezosToolkit} = useContext(TezosContext);
     const [message, setMessage] = useState<string>(undefined);
     const [errorMessage, setErrorMessage] = useState<string>(undefined);
 
@@ -30,6 +30,7 @@ function LedgerConnectButton() {
 
             try {
                 console.log("Create a new transport");
+                console.log(Tezos);
                 try {
                     transport = await TransportWebHID.create();
                 }

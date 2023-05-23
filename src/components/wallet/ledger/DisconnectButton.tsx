@@ -5,13 +5,15 @@ import { TezosContext } from "../../../lib/TezosContext";
 
 function DisconnectButton() {
 
-    const {userData, setUserData} = useContext(UserContext);
-    const Tezos: TezosToolkit = useContext(TezosContext);
+    const { userData, setUserData } = useContext(UserContext);
+    const { Tezos }: { Tezos: TezosToolkit } = useContext(TezosContext);
 
     const disconnectLedger = () => {
-        userData.transport.close();
-        setUserData(undefined);
-        Tezos.setSignerProvider(undefined);
+        if (userData !== undefined) {
+            userData.transport.close();
+            setUserData(undefined);
+            Tezos.setSignerProvider(undefined);
+        }
     }
 
     return (

@@ -1,3 +1,15 @@
 {
-    "rpcUrl": "https://ghostnet.tezos.marigold.dev/"
+    "rpcUrl": "https://ghostnet.tezos.marigold.dev/",
+    "networks": [
+        {
+            "name": "Mainnet",
+            "rpcUrl": "https://mainnet.api.tez.ie",
+            "default": true
+        },
+        {
+            "name": "Ghostnet",
+            "rpcUrl": "https://rpc.ghostnet.teztnets.xyz",
+            "default": false
+        }
+    ]
 }

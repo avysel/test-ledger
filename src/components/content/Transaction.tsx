@@ -6,7 +6,7 @@ import { TezosContext } from "../../lib/TezosContext";
 function Transaction() {
 
     const { userData } = useContext(UserContext);
-    const Tezos: TezosToolkit = useContext(TezosContext);
+    const { Tezos }: {Tezos: TezosToolkit} = useContext(TezosContext);
     const [message, setMessage] = useState<string>(undefined);
     const [errorMessage, setErrorMessage] = useState<string>(undefined);
 

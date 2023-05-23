@@ -3,6 +3,7 @@ import UserInfo from "./UserInfo";
 import DisconnectButton from "./ledger/DisconnectButton";
 import ConnectButton from "./ledger/LedgerConnectButton";
 import { UserContext } from "../../lib/UserContext";
+import NetworkSelector from "./NetworkSelector";
 
 function Wallet() {
 
@@ -14,18 +15,33 @@ function Wallet() {
                 <div className="card">
                     <div className="card-content">
 
+                        <div className="columns">
+                            <div className="column">
+                                <NetworkSelector />
+                            </div>
+                        </div>
+
                         {
                             userData &&
-                            <div>
-                                <UserInfo />
-                                <DisconnectButton />
+                            <div className="columns">
+                                <div className="column">
+                                    <UserInfo />
+                                    <DisconnectButton />
+                                </div>
                             </div>
                         }
 
                         {
                             !userData &&
                             <div>
-                                <ConnectButton />
+                                <div className="columns">
+                                    <div className="column">
+                                        <ConnectButton />
+                                    </div>
+                                    <div className="column">
+
+                                    </div>
+                                </div>
                             </div>
                         }
                     </div>

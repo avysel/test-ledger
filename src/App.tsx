@@ -5,16 +5,16 @@ import { UserData } from './types';
 import { TezosContext } from './lib/TezosContext';
 import { UserContext } from './lib/UserContext';
 import Transaction from './components/content/Transaction';
-import config from './config.json';
+import { getDefaultNetwork } from './Utils';
 
 
 function App() {
 
-  const [Tezos] = useState<TezosToolkit>(new TezosToolkit(config.rpcUrl));
+  const [Tezos, setTezos] = useState<TezosToolkit>(new TezosToolkit(getDefaultNetwork().rpcUrl));
   const [userData, setUserData] = useState<UserData | undefined>(undefined);
 
   return (
-    <TezosContext.Provider value={Tezos}>
+    <TezosContext.Provider value={{ Tezos, setTezos }}>
       <UserContext.Provider value={{ userData, setUserData }}>
         <div className='columns'>
           <div className='column'>
