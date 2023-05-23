@@ -6,7 +6,7 @@ import { UserContext } from "../../../lib/UserContext";
 import { TezosContext } from '../../../lib/TezosContext';
 import { UserData } from '../../../types';
 
-function ConnectButton() {
+function LedgerConnectButton() {
 
     const { setUserData } = useContext(UserContext);
     const Tezos: TezosToolkit = useContext(TezosContext);
@@ -15,7 +15,6 @@ function ConnectButton() {
 
     let mobileNavigatorObject: any = window.navigator;
     const ledgerAvailable: boolean = mobileNavigatorObject.hid;
-    console.log(mobileNavigatorObject);
 
     useEffect(() => {
 
@@ -74,14 +73,16 @@ function ConnectButton() {
     }
 
     return (
-        <div>
-            <div className="block">
+        <div className="ledger-connect-button">
+            <div className="block disclaimer">
                 Please connect your Ledger and open Tezos application.
             </div>
-            <div className="block">
-                <button className="button" onClick={connectLedger} disabled={!ledgerAvailable}>Connect with Ledger</button>
+            <div className="block button-block">
+                <button className="button" onClick={connectLedger} disabled={!ledgerAvailable}>
+                    Connect with Ledger
+                </button>
             </div>
-            <div  className="block">
+            <div  className="block feedback-message">
             {
                 !mobileNavigatorObject.hid &&
                 <span className="message is-danger">
@@ -117,4 +118,4 @@ function ConnectButton() {
     );
 }
 
-export default ConnectButton;
+export default LedgerConnectButton;
