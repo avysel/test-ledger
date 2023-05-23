@@ -1,17 +1,22 @@
 import { useContext, useEffect, useState } from 'react';
-import { DerivationType, HDPathTemplate, LedgerSigner } from '@taquito/ledger-signer';
+import { DerivationType, LedgerSigner } from '@taquito/ledger-signer';
 import { TezosToolkit } from "@taquito/taquito";
 import TransportWebHID from "@ledgerhq/hw-transport-webhid";
 import { UserContext } from "../../../lib/UserContext";
 import { TezosContext } from '../../../lib/TezosContext';
 import { UserData } from '../../../types';
+import config from './../../../config.json';
 
 function LedgerConnectButton() {
 
     const { setUserData } = useContext(UserContext);
-    const { Tezos }: {Tezos: TezosToolkit} = useContext(TezosContext);
+    const { Tezos }: { Tezos: TezosToolkit } = useContext(TezosContext);
     const [message, setMessage] = useState<string>(undefined);
     const [errorMessage, setErrorMessage] = useState<string>(undefined);
+
+    const [displayCustomInputs, setDisplayCustomInputs] = useState<boolean>(false);
+    const [derivationPath, setDerivationPath] = useState<string>(config.defaultLedgerDerivationPath);
+    const [derivationType, setDerivationType] = useState<number>(DerivationType.ED25519);
 
     let mobileNavigatorObject: any = window.navigator;
     const ledgerAvailable: boolean = mobileNavigatorObject.hid;
@@ -43,7 +48,7 @@ function LedgerConnectButton() {
                 setMessage("Please accept request on your Ledger ...")
                 const ledgerSigner = new LedgerSigner(
                     transport,
-                    HDPathTemplate(0), // path optional (equivalent to "44'/1729'/1'/0'")
+                    derivationPath, //HDPathTemplate(0), // path optional (equivalent to "44'/1729'/1'/0'")
                     true, // prompt optional
                     DerivationType.ED25519 // derivationType optional
                 );
@@ -83,37 +88,59 @@ function LedgerConnectButton() {
                     Connect with Ledger
                 </button>
             </div>
-            <div  className="block feedback-message">
-            {
-                !mobileNavigatorObject.hid &&
-                <span className="message is-danger">
-                    <div className="message-body">
-                        Available only on Chrome, Edge and Opera.
+            <div className='block custom-block'>
+                <label className="checkbox">
+                    Customize path <input type="checkbox" defaultChecked={displayCustomInputs} onChange={e => setDisplayCustomInputs(e.target.checked)} />
+                </label>
+                <div className={`block custom-values ${displayCustomInputs ? '' : 'is-hidden'}`}>
+                    <div className="columns">
+                        <div className='column'>
+                            <input className="input" type="text" placeholder="Text input" value={derivationPath} onChange={e => setDerivationPath(e.target.value)} />
+                        </div>
+                        <div className='column'>
+                            <div className='select'>
+                                <select value={derivationType} onChange={e => setDerivationType(parseInt(e.target.value))}>
+                                    <option value="0">ED25519</option>
+                                    <option value="1">SECP256K1</option>
+                                    <option value="2">P256</option>
+                                    <option value="3">BIP32_ED25519</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
-                </span>
-            }
-
-            {
-                message &&
-                <div>
-                    <article className="message is-info">
-                        <div className="message-body">
-                            {message}
-                        </div>
-                    </article>
                 </div>
-            }
-
-            {
-                errorMessage &&
-                <div>
-                    <article className="message is-danger">
+            </div>
+            <div className="block feedback-message">
+                {
+                    !mobileNavigatorObject.hid &&
+                    <span className="message is-danger">
                         <div className="message-body">
-                            {errorMessage}
+                            Available only on Chrome, Edge and Opera.
                         </div>
-                    </article>
-                </div>
-            }
+                    </span>
+                }
+
+                {
+                    message &&
+                    <div>
+                        <article className="message is-info">
+                            <div className="message-body">
+                                {message}
+                            </div>
+                        </article>
+                    </div>
+                }
+
+                {
+                    errorMessage &&
+                    <div>
+                        <article className="message is-danger">
+                            <div className="message-body">
+                                {errorMessage}
+                            </div>
+                        </article>
+                    </div>
+                }
             </div>
         </div>
     );

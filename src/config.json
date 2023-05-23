@@ -11,5 +11,6 @@
             "rpcUrl": "https://rpc.ghostnet.teztnets.xyz",
             "default": false
         }
-    ]
+    ],
+    "defaultLedgerDerivationPath": "44'/1729'/0'/0'"
 }
