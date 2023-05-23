@@ -81,7 +81,7 @@ function NetworkSelector() {
                     <div className="card">
                         <header className="card-header">
                             <p className="card-header-title">
-                                You will have to to reconnect your wallet. Continue?
+                                You will have to reconnect your wallet. Continue?
                             </p>
                         </header>
                         <div className="card-content">
