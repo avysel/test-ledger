@@ -1,3 +1,24 @@
+# Tezos Ledger connection
+
+Example of how to connect Ledger wallet to a Tezos app.
+
+## Features
+
+- Connect with Ledger first account
+- Customize derivation path to connect with other Ledger accounts
+- Switch network from Mainnet to Ghostnet
+- Disable Ledger connection for non-compatible browser
+- Send a self-transaction of 1 tez using connected account
+
+## Technical stack
+
+Made with:
+- Typescript
+- React
+- react-app-rewired
+- Taquito
+- Ledger transport Web HID
+- Bulma
 
 ## References
 
